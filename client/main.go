@@ -23,13 +23,11 @@ func main() {
 	defer conn.Close()
 	client := pb.NewDriverClient(conn)
 
-	// runGetMovies(client)
-	// runGetMovie(client, "1")
-	// runCreateMovie(client, "24325645", "Spiderman Spiderverse",
-	// 	"Stan", "Lee")
-	// runUpdateMovie(client, "98498081", "24325645", "Spiderman Spiderverse",
-	// 	"Peter", "Parker")
-	// runDeleteMovie(client, "98498081")
+	//runGetDrivers(client)
+	//runGetDriver(client, "1")
+	//runCreateDriver(client, "Amy", "2222222", int32(234), int32(123))
+	//runUpdateDriver(client, "Jack", "33333333", 111,234)
+	runDeleteDriver(client, "98498081")
 }
 
 func runGetDrivers(client pb.DriverClient) {
@@ -63,11 +61,11 @@ func runGetDriver(client pb.DriverClient, driverid string) {
 	log.Printf("DriverInfo: %v", res)
 }
 
-func runCreateDriver(client pb.DriverClient, driverid string, name string,
+func runCreateDriver(client pb.DriverClient, name string,
 	tele string, latitude int32, longitude int32) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	req := &pb.DriverInfo{Id: driverid, Name: name, Tele: tele,
+	req := &pb.DriverInfo{Name: name, Tele: tele,
 		Point: &pb.Point{Latitude: latitude, Longitude: longitude}}
 	res, err := client.CreateDriver(ctx, req)
 	if err != nil {
@@ -98,7 +96,7 @@ func runUpdateDriver(client pb.DriverClient, driverid string, name string,
 	}
 }
 
-func runDeleteMovie(client pb.DriverClient, driverid string) {
+func runDeleteDriver(client pb.DriverClient, driverid string) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 	req := &pb.Id{Value: driverid}
