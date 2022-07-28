@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option go_package = "driversapp.com/grpc/protos";
+
+option objc_class_prefix = "MAP";
+
+package driversapp;
+
+service Driver {
+	rpc GetDrivers (Empty) returns (stream DriverInfo);
+	rpc GetDriver (Id) returns (DriverInfo);
+	rpc CreateDriver (DriverInfo) returns (Id);
+	rpc UpdateDriver (DriverInfo) returns (Status);
+	rpc DeleteDriver (Id) returns (Status);
+}
+
+message Empty {}
+
+message DriverInfo {
+	string id = 1;
+	string name = 2;
+	string tele = 3;
+    Point point = 4;
+
+}
+
+
+message Point {
+  int32 latitude = 1;
+  int32 longitude = 2;
+}
+
+
+message Id {
+	string value = 1;
+}
+
+message Status {
+	int32 value = 1; 
+}
